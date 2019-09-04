@@ -1,0 +1,14 @@
+.idea/
+composer.lock
+/Temp/
+/vendor/
+/Log/
+dev.php
+docker-composer.yml
+easyswoole
+EasySwooleEvent.php
+produce.php
+src/Test/TestCriteria.php
+docker-compose.yml
+src/Test/TestRepository.php
+src/HttpController/Test.php

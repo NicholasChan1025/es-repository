@@ -1,0 +1,27 @@
+{
+    "name": "dw/repository",
+    "type": "library",
+    "description": "",
+    "autoload": {
+        "psr-4": {
+            "Infrastructure\\Repository\\": "src/"
+        }
+    },
+    "require-dev": {
+        "easyswoole/swoole-ide-helper": "^1.02",
+        "easyswoole/easyswoole": "3.2.6"
+    },
+    "require": {
+        "php": ">=7.1.0",
+        "dw/ioc": "^1.0",
+        "easyswoole/mysqli-pool": "^1.0"
+    },
+    "repositories": [
+        {"type": "composer", "url": "http://172.250.150.101:8081"},
+        {"type": "composer", "url": "https://packagist.org"}
+    ],
+    "config": {
+        "secure-http": false
+    }
+
+}
