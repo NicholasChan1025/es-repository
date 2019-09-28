@@ -1,15 +1,11 @@
 {
-    "name": "dw/repository",
+    "name": "nicholas/es-repository",
     "type": "library",
     "description": "",
     "autoload": {
         "psr-4": {
             "Infrastructure\\Repository\\": "src/"
         }
-    },
-    "require-dev": {
-        "easyswoole/swoole-ide-helper": "^1.02",
-        "easyswoole/easyswoole": "3.2.6"
     },
     "require": {
         "php": ">=7.1.0",
