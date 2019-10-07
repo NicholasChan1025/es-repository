@@ -9,7 +9,6 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "nicholas/es-repository": "^0.0.1",
         "easyswoole/mysqli-pool": "^1.0"
     },
     "repositories": [
