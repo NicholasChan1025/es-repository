@@ -9,10 +9,9 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "easyswoole/mysqli-pool": "^1.0"
+        "easyswoole/orm": "^1.0"
     },
     "repositories": [
-        {"type": "composer", "url": "http://172.250.150.101:8081"},
         {"type": "composer", "url": "https://packagist.org"}
     ],
     "config": {
