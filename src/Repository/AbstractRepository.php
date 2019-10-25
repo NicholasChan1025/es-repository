@@ -44,6 +44,11 @@ class AbstractRepository
     /* 回调事件 */
     private $onQuery;
 
+
+    public static function create(){
+        return new static();
+    }
+
     /**
      * @return null
      */
