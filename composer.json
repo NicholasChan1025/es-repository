@@ -2,6 +2,7 @@
     "name": "nicholas/es-repository",
     "type": "library",
     "description": "",
+    "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
             "Infrastructure\\Repository\\": "src/"
