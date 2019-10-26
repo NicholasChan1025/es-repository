@@ -5,6 +5,7 @@ namespace Infrastructure\Repository\Repository;
 
 use EasySwoole\MysqliPool\Connection;
 use EasySwoole\MysqliPool\Mysql;
+use Infrastructure\Repository\Contracts\AbstractCriteria;
 
 
 class BaseRepository
@@ -25,5 +26,18 @@ class BaseRepository
     }
 
 
+    public static function create(){
+        return new static();
+    }
+
+    public function addCriteria(array $criteriaList){
+
+        foreach ($criteriaList as $criteria){
+            if($criteria instanceof AbstractCriteria){
+                 $criteria->build($this->db);
+            }
+        }
+        return $this;
+    }
 
 }
