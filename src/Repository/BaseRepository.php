@@ -64,6 +64,11 @@ class BaseRepository
     }
 
 
+    public function field($field){
+        $this->fields = $field;
+        return $this;
+    }
+
     public function alias(string $alias){
         $this->alias = $alias;
         return $this;
