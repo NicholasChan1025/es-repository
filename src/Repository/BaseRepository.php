@@ -21,7 +21,7 @@ class BaseRepository
      */
     public function __construct()
     {
-        $this->db = Mysql::getInstance()->pool('mysql')::defer();
+        $this->db = Mysql::getInstance()::defer('mysql');
     }
 
 
