@@ -59,6 +59,7 @@ class AbstractRepository
 
     public function alias(string $aliasName){
         $this->alias = $aliasName;
+        return $this;
     }
 
     public function getAlias(){
