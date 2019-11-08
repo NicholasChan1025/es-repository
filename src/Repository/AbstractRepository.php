@@ -23,11 +23,13 @@ class AbstractRepository
     private $where  = [];
     private $join   = NULL;
     private $group  = NULL;
+    private $alias  = NULL;
+
+
 
     /** @var string 表名 */
     protected $tableName = '';
     protected $primaryKey = NULL;
-    protected $alias;
 
 
     /**
@@ -62,7 +64,7 @@ class AbstractRepository
         return $this;
     }
 
-    public function getAlias(){
+    public function parseTableName(){
         if(!empty($this->alias)){
             return $this->tableName . ' AS '.$this->alias;
         }
@@ -187,10 +189,6 @@ class AbstractRepository
         return $this->lastQuery;
     }
 
-    function __construct()
-    {
-    }
-
     function connection(string $name, bool $isTemp = false): AbstractRepository
     {
         if ($isTemp) {
@@ -213,7 +211,7 @@ class AbstractRepository
 
         PreProcess::mappingWhere($builder, $where, $this);
         $this->preHandleQueryBuilder($builder);
-        $builder->delete($this->getAlias(), $this->limit);
+        $builder->delete($this->parseTableName(), $this->limit);
         $this->query($builder);
         return $this->lastQueryResult()->getAffectedRows();
     }
@@ -231,7 +229,7 @@ class AbstractRepository
         if (empty($this->primaryKey)) {
             throw new Exception('save() needs primaryKey for model ' . static::class);
         }
-        $builder->insert($this->getAlias(), $rawArray);
+        $builder->insert($this->parseTableName(), $rawArray);
         $this->preHandleQueryBuilder($builder);
         $this->query($builder);
         if ($this->lastQueryResult()->getResult() === false) {
@@ -255,7 +253,7 @@ class AbstractRepository
         $builder = new QueryBuilder;
         $builder = PreProcess::mappingWhere($builder, $where, $modelInstance);
         $this->preHandleQueryBuilder($builder);
-        $builder->getOne($this->getAlias(), $this->fields);
+        $builder->getOne($this->parseTableName(), $this->fields);
         $res = $this->query($builder);
         if (empty($res)) {
             return null;
@@ -277,7 +275,7 @@ class AbstractRepository
         $builder = new QueryBuilder;
         $builder = PreProcess::mappingWhere($builder, $where, $this);
         $this->preHandleQueryBuilder($builder);
-        $builder->get($this->getAlias(), $this->limit, $this->fields);
+        $builder->get($this->parseTableName(), $this->limit, $this->fields);
         $results = $this->query($builder);
         $resultSet = [];
         if (is_array($results)) {
@@ -303,15 +301,15 @@ class AbstractRepository
         if ($where) {
             PreProcess::mappingWhere($builder, $where, $this);
         } else {
-            if (isset($this->data[$this->primaryKey])) {
-                $pkVal = $this->data[$this->primaryKey];
+            if (isset($data[$this->primaryKey])) {
+                $pkVal = $data[$this->primaryKey];
                 $builder->where($this->primaryKey, $pkVal);
             } else {
                 throw new Exception("update error,pkValue is require");
             }
         }
         $this->preHandleQueryBuilder($builder);
-        $builder->update($this->getAlias(), $data);
+        $builder->update($this->parseTableName(), $data);
         $results = $this->query($builder);
         return $results ? true : false;
     }
@@ -319,7 +317,6 @@ class AbstractRepository
     protected function reset()
     {
         $this->tempConnectionName = null;
-
         $this->fields = "*";
         $this->limit  = NULL;
         $this->withTotalCount = FALSE;
@@ -409,20 +406,6 @@ class AbstractRepository
         }
         return null;
     }
-
-    /**
-     * 批量查询 不映射对象  返回数组
-     * @param null $where
-     * @return array
-     * @throws Exception
-     * @throws \Throwable
-     */
-    public function select($where = null):array
-    {
-        return $this->all($where);
-    }
-
-
 
     /**
      * 读写分离
